@@ -20,11 +20,27 @@ currentShow.currentSeason = 5
 // but if we freeze the object
 Object.freeze(currentShow);
 
-currentShow.currentSeason = 5;
+// currentShow.currentSeason = 5;
 // Throws an error and current_season remains unchanged
 
 
 // OBJECT FREEZE EXERCISE
+
+const ownObjectToFreeze = {
+    foo: 'blar',
+    blar: 'foo'
+}
+
+ownObjectToFreeze.blar = 'raz';
+Object.freeze(ownObjectToFreeze);
+
+// will throw an error:
+// ownObjectToFreeze.blar = 'raz2';
+// This will be the error message:
+// TypeError: Cannot assign to read only property 'blar' of object '#<Object>'
+// at Object.<anonymous> (/Users/majmesku/dev/udacity/nd032-c2-functional-programming-with-javascript-starter/functional_js_syntax/object_freeze.js:37:24)
+
+console.log(ownObjectToFreeze);
 
 // ----------------------------------------------------------
 // Directions: Create your own object and freeze it!
