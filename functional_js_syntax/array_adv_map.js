@@ -16,6 +16,16 @@ var index = [
     {key: 3, sector: 8346, t_score: 10, id: 'n9837ks857', value: 'Jawa'},
 ]
 
+console.log(
+  index.map((item, index, entireObject) => (
+    {
+        id: item.id.substring(0, 3),
+        value: item.value
+    }
+    )
+  )
+);
+
 // Expected Output:
 // [
 //     {id: '123', value: 'Klingon'},
