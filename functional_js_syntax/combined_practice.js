@@ -101,6 +101,11 @@ const characters = [
 // Create an array containing only the names of Captains from all universes.
 
 // Your Code here
+console.log(
+  characters.filter(item => {
+    return item.role === 'Captain'
+  }).map(item => item.name).reverse()
+);
 
 // expected output: ['Mal Reynolds', 'Kathryn Janeway']
 
@@ -113,6 +118,20 @@ const characters = [
 // Group all characters by universe in a multidimensional array
 
 // Your Code here
+
+console.log(
+  characters
+    .reduce((acc, curr, i, arr) => {
+      acc[curr.universe] = acc[curr.universe] === undefined ? [] : acc[curr.universe]
+      acc[curr.universe].push(curr)
+
+      if (i + 1 === arr.length) {
+        return Object.values(acc)
+      }
+
+      return acc
+    }, {})
+);
 
 // expected output:
 
@@ -196,6 +215,26 @@ const characters = [
 
 // Your Code here
 
+const groupByUniverse = (acc, curr, i, arr) => {
+  acc[curr.universe] = acc[curr.universe] === undefined ? [] : acc[curr.universe]
+  acc[curr.universe].push(curr)
+
+  if (i + 1 == arr.length) {
+    return Object.entries(acc)
+      .filter(([_, characters]) => characters.length === 1)
+      .map(([_, characters]) => characters[0])
+  }
+
+  return acc
+}
+
+const soloCharacters = characters
+  .reduce(groupByUniverse, {})
+  .map(character => character.name)
+  .join(', ')
+
+console.log('soloCharacters:', soloCharacters)
+
 // expected output: [ Marvin the Paranoid Android, Peter Venkman, Dr. Daniel Jackson ]
 
 // ----------------------------------------------------------
@@ -207,5 +246,9 @@ const characters = [
 // What is the average power level across all characters?
 
 // Your code here
+const avgPowerLvl = characters
+  .map(c => c.power_level)
+  .reduce((acc, curr, i) => (acc += curr) / i)
 
+console.log('avgPowerLvl:', avgPowerLvl)
 // expected output: 68.71319452795147
