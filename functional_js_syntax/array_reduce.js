@@ -3,6 +3,13 @@ const text = ['The ships', 'hung in the sky,', 'much the way', 'that bricks don`
 
 // Your Code Here
 
+console.log(
+  text.reduce((total, currentValue) => {
+      return total + ' ' + currentValue
+    }
+  )
+);
+
 // expected output: "The ships hung in the sky, much the way that bricks don't"
 
 // ----------------------------------------------------------
@@ -28,6 +35,11 @@ const scores = [
 ]
 
 // Your Code Here
+
+const teamWithHighestScore = scores.reduce((highValue, currentValue) => {
+  return currentValue.score > highValue.score ? currentValue : highValue;
+})
+console.log(teamWithHighestScore.team);
 
 // expected output: "C"
 
@@ -58,5 +70,10 @@ const ships = [
 ]
 
 // Your Code Here
+
+const fastestShip = ships.reduce((highValue, currentValue) => {
+    return parseFloat(currentValue.speed) > parseFloat(highValue.speed) ? currentValue : highValue;
+})
+console.log(fastestShip.name);
 
 // Expected output: Tie Fighters
