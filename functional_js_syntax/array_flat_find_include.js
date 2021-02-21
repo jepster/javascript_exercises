@@ -11,7 +11,11 @@ const characters = [
     ['Professor X', 'Wolverine', 'Quicksilver', ['Magneto']]
 ]
 
-const results = characters.flat(1)
+const resultsFlat1 = characters.flat(2);
+console.log(resultsFlat1);
+const resultsFlat2 = characters.flat(3);
+console.log(resultsFlat2);
+// console.log(resultsFlat2);
 // const results = characters.flat(2)
 // const results = characters.flat(3)
 // And what happens if you go past the max depth of the array?
@@ -32,7 +36,9 @@ const ids = [
     'ABCKO',
     'IUABC'
 ]
-
+console.log(
+  ids.find(x => x.substring(0, 3) === 'ABC')
+);
 
 // ----------------------------------------------------------
 // INCLUDE EXERCISES
@@ -52,6 +58,7 @@ const admins = [
     '098Xc8x76m3nb4aposi'
 ]
 
+console.log(admins.includes(currentUserId));
 // ----------------------------------------------------------
 
 // 2. Checking between lists. Another thing that you might need to do in real life is check items between two arrays. Check if array B has any values that are also in array A. This becomes especially helpful when the values are hard to distinguish visually
@@ -75,3 +82,12 @@ const B = [
     '298374naskdj273ubsl',
     '098LKJnsvijevkwejf6'
 ]
+
+const C = A.filter(item => {
+    console.log(B.includes(item))
+    return B.includes(item)
+
+})
+
+console.log(C);
+// output: [ '2389sakvjhw8e7f09fv' ]
