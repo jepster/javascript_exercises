@@ -7,6 +7,18 @@ weaponsWithNoises = [
 ]
 
 function weaponsFromUniverse(universe) {
+	const useableWeapons = weaponsWithNoises.filter(w => w.universe == universe)
+
+	return (weaponName) => {
+		const weapon = useableWeapons.find(w => weaponName === w.name);
+
+		if (weapon) {
+			console.log(`used ${weapon.name}: ${weapon.noise}`)
+		} else {
+			console.log(`${weaponName} is not a part of the ${universe} universe`)
+		}
+	}
+
 	// ...Your code here!
 }
 
