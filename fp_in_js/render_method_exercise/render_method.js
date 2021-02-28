@@ -6,8 +6,27 @@ const Welcome = () => {
     return `Welcome to my Javascript Program!`
 }
 
+const Menu = (show) => {
+    if (show === true) {
+        return `
+        <nav>
+        <ul>
+            <li>About Us</li>
+            <li>Contact Us</li>
+            <li>Login</li>
+        </ul>
+      </nav>
+    `
+    } else {
+        return `
+        <nav>Menu</nav>
+        `
+    }
+}
+
 const App = () => {
     return `
+        ${Menu(true)}
         <h1>${Welcome()}<h1>
         <div> I EXIST! </div>
     `
