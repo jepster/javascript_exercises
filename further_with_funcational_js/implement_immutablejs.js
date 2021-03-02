@@ -14,9 +14,7 @@ let store = {
 }
 
 const updateStore = (store, newState) => {
-    // store = Object.assign(store, newState)
-    const veryNewStore = Immutable.merge(store, newState);
-    return veryNewStore;
+    return Immutable.merge(store, newState);
 }
 
 console.log(updateStore(store, {user: {first_name: 'Kevin', last_name: 'Alfa Kevin'}}));
