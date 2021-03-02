@@ -1,4 +1,3 @@
-// import immutablejs.js
 const Immutable = require('immutable');
 
 // PART 1. Getting and Setting values
@@ -30,9 +29,12 @@ const map2 = Immutable.Map({
 // YOUR TURN --------------------------------------------------------------
 // create `map3` immutable object by merging `map1` and `map2`
 
-console.log(map1.toJS())
-console.log(map2.toJS())
-console.log(map3.toJS())
+const map3 = map1.merge(map2);
+
+
+// console.log(map1.toJS())
+// console.log(map2.toJS())
+// console.log(map3.toJS())
 
 
 // -----------------------------------------------------------------
@@ -47,12 +49,16 @@ const obj = { d: 100, o: 200, g: 300 };
 const map4 = map1.merge(map2, obj);
 
 // But also notice how different the two are when we console log map3 
-console.log(map4.toJS())
+// console.log(map4.toJS())
 
 // YOUR TURN --------------------------------------------------------------
 // Can you locate the contents of our variable 'obj' inside the Immutable Map map3?
 
 //Your code
+// console.log(obj.d);
+// console.log(obj.o);
+// console.log(obj.g);
+
 
 // -----------------------------------------------------------------
 // -----------------------------------------------------------------
@@ -65,19 +71,19 @@ const numbers = Immutable.List([1, 2, 3]);
 // We can turn normal JS arrays into Immutable Lists like this:
 const plainArray = [ 1, 2, 3, 4 ]
 const listFromPlainArray = Immutable.List(plainArray)
-console.log(listFromPlainArray.toJS())
+// console.log(listFromPlainArray.toJS())
 
 // we can declare a new Immutable List
 const myList = Immutable.List([ 'stuffed t-rex' ]);
-console.log(Array.from(myList));
+// console.log(Array.from(myList));
 
 // and we can use the set method again to add or update values. Just provide the index first and value second
 const myList1 = myList.set(1, 'toy lightsaber');
-console.log(Array.from(myList1)); // [ "stuffed t-rex", "toy lightsaber" ]
+// console.log(Array.from(myList1)); // [ "stuffed t-rex", "toy lightsaber" ]
 
 // but, in order to not need to supply the index, we can also add new values with push
 const myList2 = myList1.push('Picard bobblehead')
-console.log(Array.from(myList2));
+// console.log(Array.from(myList2));
 
 // YOUR TURN --------------------------------------------------------------------------
 
@@ -85,6 +91,11 @@ console.log(Array.from(myList2));
 // 2. Add a character
 
 // Your code
+const myArray = ['B'];
+const customImmutableArray = Immutable.List(myArray);
+const customImmutableArray1 = customImmutableArray.set(1, 'Foo');
+// console.log(customImmutableArray1);
+
 
 // -----------------------------------------------------------------
 // -----------------------------------------------------------------
@@ -131,3 +142,6 @@ const characters = [
     power_level: 140
   }
 ]
+
+const newCharacters = Immutable.remove(characters, 1);
+console.log(newCharacters);
