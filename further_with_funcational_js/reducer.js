@@ -20,7 +20,12 @@ const shieldsReducer = (state = initialState, action) => {
 		
 			// YOUR TURN: if the action object has a property called "amount", use destructuring to save that value to a const
 			// YOUR CODE HERE
-		
+
+            if (action.has('amount')) {
+                console.log('has amount');
+            }
+
+
             let { shieldLevel } = state
 
             // YOUR TURN: You now have the shield level from state and amount of change from the action. Given that this is the DAMAGE_SHIELD reducer, write the logic to reflect what should happen
