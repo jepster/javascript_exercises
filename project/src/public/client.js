@@ -84,11 +84,15 @@ const ImageOfTheDay = (apod) => {
             <p>${apod.explanation}</p>
         `)
     } else {
-        const imgSrc = apod.image.photos[0].img_src;
-        return (`
-            <img src="${imgSrc}" height="350px" width="100%" />
-            <p>${apod.image.explanation}</p>
-        `)
+        // const imgSrc = apod.image.photos[0].img_src;
+
+        const allImgSrc = apod.image.photos.map(item => {
+            return `
+              <img src="${item.img_src}" height="350px" width="100%" />
+            `
+        });
+
+        return allImgSrc;
     }
 }
 
