@@ -40,27 +40,23 @@ const App = async () => {
 
     const immutableRoverPhotoCollection = fromJS(roverPhotoCollection);
 
-    debugger
 
-    // const htmlRoverInitialList = immutableRoverPhotoCollection.map(item => {
-    //     debugger
-    //     return `
-    //         <div>
-    //           <span>Name:</span> ${item.rover.name}
-    //         </div>
-    //         <div>
-    //           <img src="${item.img_src}" title="${item.rover.name}" alt="${item.rover.name}" />
-    //         </div>
-    //     `
-    // });
-
-    debugger
+    const htmlRoverInitialList = immutableRoverPhotoCollection.map(item => {
+        return `
+            <div>
+              <span>Name:</span> ${item.get('name')}
+            </div>
+            <div>
+              <img src="${item.get('imgSrc')}" title="${item.get('name')}" alt="${item.get('name')}" />
+            </div>
+        `
+    });
 
     return `
         <header></header>
         <main>
             <section>
-              ${htmlRoverInitialList}
+              ${htmlRoverInitialList.join()}
             </section>
         </main>
         <footer></footer>
