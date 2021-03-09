@@ -1,3 +1,5 @@
+const { fromJS } = require('immutable');
+
 let store = {
     user: { name: "Student" },
     apod: '',
@@ -12,31 +14,53 @@ const updateStore = (store, newState) => {
     render(root, store)
 }
 
-const render = async (root, state) => {
-    root.innerHTML = App(state)
+const render = async (root) => {
+    root.innerHTML = await App()
 }
 
 
 // create content
-const App = (state) => {
-    let { rovers, apod } = state
+const App = async () => {
+
+    const fetchMoviesJSON = async () => {
+        return await fetch('http://localhost:3000/apod').then(response => response.json());
+    }
+
+    const roverDataRaw = await fetchMoviesJSON();
+    const roverPhotoCollectionRaw = roverDataRaw.image.photos;
+
+
+
+    const roverPhotoCollection = roverPhotoCollectionRaw.map(item => {
+        return {
+          name: item.rover.name,
+          imgSrc: item.img_src
+        };
+    });
+
+    const immutableRoverPhotoCollection = fromJS(roverPhotoCollection);
+
+    debugger
+
+    // const htmlRoverInitialList = immutableRoverPhotoCollection.map(item => {
+    //     debugger
+    //     return `
+    //         <div>
+    //           <span>Name:</span> ${item.rover.name}
+    //         </div>
+    //         <div>
+    //           <img src="${item.img_src}" title="${item.rover.name}" alt="${item.rover.name}" />
+    //         </div>
+    //     `
+    // });
+
+    debugger
 
     return `
         <header></header>
         <main>
-            ${Greeting(store.user.name)}
             <section>
-                <h3>Put things on the page!</h3>
-                <p>Here is an example section.</p>
-                <p>
-                    One of the most popular websites at NASA is the Astronomy Picture of the Day. In fact, this website is one of
-                    the most popular websites across all federal agencies. It has the popular appeal of a Justin Bieber video.
-                    This endpoint structures the APOD imagery and associated metadata so that it can be repurposed for other
-                    applications. In addition, if the concept_tags parameter is set to True, then keywords derived from the image
-                    explanation are returned. These keywords could be used as auto-generated hashtags for twitter or instagram feeds;
-                    but generally help with discoverability of relevant imagery.
-                </p>
-                ${ImageOfTheDay(apod)}
+              ${htmlRoverInitialList}
             </section>
         </main>
         <footer></footer>
@@ -45,7 +69,7 @@ const App = (state) => {
 
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
-    render(root, store)
+    render(root)
 })
 
 // ------------------------------------------------------  COMPONENTS
@@ -84,14 +108,4 @@ const ImageOfTheDay = (apod) => {
 
 // ------------------------------------------------------  API CALLS
 
-// Example API call
-const getImageOfTheDay = (state) => {
-    let { apod } = state
 
-    const data = fetch(`http://localhost:3000/apod`)
-      .then(res => res.json())
-      .then(apod => updateStore(store, {apod}));
-
-
-    return data;
-}
