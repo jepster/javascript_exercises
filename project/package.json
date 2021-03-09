@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-backend-server": "node src/server/index.js",
-    "start-frontend-server": "npx http-server -a localhost src/public/"
+    "start-frontend-server": "npx http-server -a localhost src/public/",
+    "build": "webpack --config webpack.js --mode production",
+    "build-dev": "webpack --config webpack.js --mode development"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +18,17 @@
     "express": "^4.17.1",
     "http-server": "^0.12.3",
     "immutable": "^4.0.0-rc.12",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "webpack": "^5.24.4",
+    "babel-polyfill": "^6.26.0",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-transform-arrow-functions": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^4.5.0"
   }
 }
