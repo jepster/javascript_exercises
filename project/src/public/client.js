@@ -26,29 +26,49 @@ const App = async () => {
     }
 
     const roverDataRaw = await fetchMoviesJSON();
-    const roverPhotoCollectionRaw = roverDataRaw.image.photos;
-
-
+    const roverPhotoCollectionRaw = roverDataRaw.image.photos.sort((itemA, itemB) => itemA.earth_date - itemB.earth_date);
 
     const roverPhotoCollection = roverPhotoCollectionRaw.map(item => {
         return {
-          name: item.rover.name,
-          imgSrc: item.img_src
+            name: item.rover.name,
+            imgSrc: item.img_src,
+            earthDate: item.earth_date,
+            landingDate: item.rover.landing_date,
+            launchDate: item.rover.launch_date,
         };
     });
 
     const immutableRoverPhotoCollection = fromJS(roverPhotoCollection);
 
 
-    const htmlRoverInitialList = immutableRoverPhotoCollection.map(item => {
-        return `
-            <div>
-              <span>Name:</span> ${item.get('name')}
+    const htmlRoverInitialList = immutableRoverPhotoCollection.map((item, index) => {
+        let htmlMarkup = '';
+
+        // if (index === 0 || index % 4 === 0) {
+        //     htmlMarkup += `<div class="row">`;
+        // }
+
+        htmlMarkup += `<div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    Name: ${item.get('name')}
+                </div>
+                <img class="card-img-top" src="${item.get('imgSrc')}" title="${item.get('name')}"
+                     alt="${item.get('name')}"/>
+                <div class="card-body">
+                    <p class="card-text">
+                        <p>Landing date: ${item.get('landingDate')}</p>
+                        <p>Launch date: ${item.get('launchDate')}</p>
+                    </p>
+                </div>
             </div>
-            <div>
-              <img src="${item.get('imgSrc')}" title="${item.get('name')}" alt="${item.get('name')}" />
-            </div>
-        `
+        </div>`;
+
+        // if (index !== 0 && index % 9 === 0) {
+        //     htmlMarkup += `</div>`;
+        // }
+
+        return htmlMarkup;
     });
 
   JsLoadingOverlay.hide();
@@ -57,7 +77,11 @@ const App = async () => {
         <header></header>
         <main>
             <section>
-              ${htmlRoverInitialList.join()}
+                <div class="container">
+                  <div class="row" id="root">
+                    ${htmlRoverInitialList.join('')}
+                  </div>
+                </div>
             </section>
         </main>
         <footer></footer>
