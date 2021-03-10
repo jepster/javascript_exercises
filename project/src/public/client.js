@@ -1,5 +1,9 @@
 const { fromJS } = require('immutable');
 
+import 'bootstrap';
+import "./assets/stylesheets/main.scss";
+import 'js-loading-overlay'
+
 let store = {
     user: { name: "Student" },
     apod: '',
@@ -8,11 +12,6 @@ let store = {
 
 // add our markup to the page
 const root = document.getElementById('root')
-
-const updateStore = (store, newState) => {
-    store = Object.assign(store, newState)
-    render(root, store)
-}
 
 const render = async (root) => {
     root.innerHTML = await App()
@@ -52,6 +51,8 @@ const App = async () => {
         `
     });
 
+  JsLoadingOverlay.hide();
+
     return `
         <header></header>
         <main>
@@ -65,6 +66,7 @@ const App = async () => {
 
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
+    JsLoadingOverlay.show();
     render(root)
 })
 
