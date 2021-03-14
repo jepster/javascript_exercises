@@ -34,8 +34,8 @@ We have supplied some of the foundational code for you. So follow these steps to
 
 To complete this project, your UI must show the following:
 
-- [ ] A gallery of the most recent images sent from each mars rover
-- [ ] The launch date, landing date, name and status along with any other information about the rover
+- [X] A gallery of the most recent images sent from each mars rover
+- [X] The launch date, landing date, name and status along with any other information about the rover
 - [ ] A selection bar for the user to choose which rover's information they want to see
 
 To complete this project, your UI must do the following:
@@ -48,13 +48,13 @@ To complete this project, your frontend code must:
 
 - [ ] Use only pure functions
 - [ ] Use at least one Higher Order Function
-- [ ] Use the array method `map`
-- [ ] Use the ImmutableJS library
+- [X] Use the array method `map`
+- [X] Use the ImmutableJS library
 
 To complete this project, your backend code must:
 
-- [ ] Be built with Node/Express
-- [ ] Make successful calls to the NASA API
+- [X] Be built with Node/Express
+- [X] Make successful calls to the NASA API
 - [ ] Use pure functions to do any logic necessary
 - [ ] Hide any sensetive information from public view (In other words, use your dotenv file)
 

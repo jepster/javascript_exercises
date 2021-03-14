@@ -4,12 +4,6 @@ import 'bootstrap';
 import "./assets/stylesheets/main.scss";
 import 'js-loading-overlay'
 
-let store = {
-    user: { name: "Student" },
-    apod: '',
-    rovers: ['Curiosity', 'Opportunity', 'Spirit'],
-}
-
 // add our markup to the page
 const root = document.getElementById('root')
 
@@ -97,26 +91,5 @@ const RenderedList = (roverDataRaw) => {
         <footer></footer>
     `
 }
-
-// Example of a pure function that renders infomation requested from the backend
-const ImageOfTheDay = (apod) => {
-
-    // If image does not already exist, or it is not from today -- request it again
-    // const today = new Date()
-    //
-    // if (!apod || apod.date === today.getDate() ) {
-    //     getImageOfTheDay(store)
-    // }
-
-    debugger
-
-    return apod.image.photos.map(item => {
-        return `
-          <img src="${item.img_src}" height="350px" width="100%" />
-        `
-    });
-}
-
-// ------------------------------------------------------  API CALLS
 
 
