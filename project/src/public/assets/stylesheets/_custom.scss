@@ -1,11 +1,14 @@
 .card {
-  height: 448px;
+  height: 560px;
   margin-bottom: 25px;
 }
 
 .card {
+  .img-wrapper {
+    height: 290px;
+    background-color: #f6f6f6;
+  }
   img {
     max-height: 286px;
   }
-  background-color: #37c113;
 }

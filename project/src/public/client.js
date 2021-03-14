@@ -26,6 +26,20 @@ const App = async () => {
     }
 
     const roverDataRaw = await fetchMoviesJSON();
+
+    return `${RenderedList(roverDataRaw)}`;
+}
+
+// listening for load event because page should load before any JS is called
+window.addEventListener('load', () => {
+    JsLoadingOverlay.show();
+    render(root)
+})
+
+// ------------------------------------------------------  COMPONENTS
+
+// Pure function that renders conditional information -- THIS IS JUST AN EXAMPLE, you can delete it.
+const RenderedList = (roverDataRaw) => {
     const roverPhotoCollectionRaw = roverDataRaw.image.photos.sort((itemA, itemB) => itemA.earth_date - itemB.earth_date);
 
     const roverPhotoCollection = roverPhotoCollectionRaw.map(item => {
@@ -35,6 +49,8 @@ const App = async () => {
             earthDate: item.earth_date,
             landingDate: item.rover.landing_date,
             launchDate: item.rover.launch_date,
+            status: item.rover.status,
+            camera: item.camera.full_name
         };
     });
 
@@ -44,34 +60,28 @@ const App = async () => {
     const htmlRoverInitialList = immutableRoverPhotoCollection.map((item, index) => {
         let htmlMarkup = '';
 
-        // if (index === 0 || index % 4 === 0) {
-        //     htmlMarkup += `<div class="row">`;
-        // }
-
         htmlMarkup += `<div class="col-sm-4">
             <div class="card">
                 <div class="card-header">
                     Name: ${item.get('name')}
                 </div>
-                <img class="card-img-top" src="${item.get('imgSrc')}" title="${item.get('name')}"
-                     alt="${item.get('name')}"/>
+                <div class="img-wrapper">
+                  <img class="card-img-top" src="${item.get('imgSrc')}" title="${item.get('name')}" alt="${item.get('name')}"/>
+                </div>
                 <div class="card-body">
-                    <p class="card-text">
-                        <p>Landing date: ${item.get('landingDate')}</p>
-                        <p>Launch date: ${item.get('launchDate')}</p>
-                    </p>
+                    <p>Landing date: ${item.get('landingDate')}</p>
+                    <p>Launch date: ${item.get('launchDate')}</p>
+                    <p>Earth date: ${item.get('earthDate')}</p>
+                    <p>Status: ${item.get('status')}</p>
+                    <p>Camera: ${item.get('camera')}</p>
                 </div>
             </div>
         </div>`;
 
-        // if (index !== 0 && index % 9 === 0) {
-        //     htmlMarkup += `</div>`;
-        // }
-
         return htmlMarkup;
     });
 
-  JsLoadingOverlay.hide();
+    JsLoadingOverlay.hide();
 
     return `
         <header></header>
@@ -85,27 +95,6 @@ const App = async () => {
             </section>
         </main>
         <footer></footer>
-    `
-}
-
-// listening for load event because page should load before any JS is called
-window.addEventListener('load', () => {
-    JsLoadingOverlay.show();
-    render(root)
-})
-
-// ------------------------------------------------------  COMPONENTS
-
-// Pure function that renders conditional information -- THIS IS JUST AN EXAMPLE, you can delete it.
-const Greeting = (name) => {
-    if (name) {
-        return `
-            <h1>Welcome, ${name}!</h1>
-        `
-    }
-
-    return `
-        <h1>Hello!</h1>
     `
 }
 

@@ -29,6 +29,8 @@
     "http-server": "^0.12.3",
     "immutable": "^4.0.0-rc.12",
     "jquery": "^3.6.0",
+    "js-loading-overlay": "^1.2.0",
+    "livereload": "^0.9.2",
     "node-fetch": "^2.6.0",
     "popper.js": "^1.16.1",
     "postcss-loader": "^5.1.0",
