@@ -8,32 +8,24 @@ import 'js-loading-overlay'
 const root = document.getElementById('root')
 
 const render = async (root) => {
-    root.innerHTML = await App()
+    root.innerHTML = await App();
+
+    const inputElements = document.querySelectorAll('input[type=checkbox]');
+    Array.from(inputElements).map(input => {
+        input.addEventListener('change', (event) => {
+            if (event.target.checked) {
+                console.log("Checkbox is checked..");
+            } else {
+                console.log("Checkbox is not checked..");
+            }
+        });
+    });
+
 }
 
+let applicationStore = {};
 
-// create content
-const App = async () => {
-
-    const fetchMoviesJSON = async () => {
-        return await fetch('http://localhost:3000/apod').then(response => response.json());
-    }
-
-    const roverDataRaw = await fetchMoviesJSON();
-
-    return `${RenderedList(roverDataRaw)}`;
-}
-
-// listening for load event because page should load before any JS is called
-window.addEventListener('load', () => {
-    JsLoadingOverlay.show();
-    render(root)
-})
-
-// ------------------------------------------------------  COMPONENTS
-
-// Pure function that renders conditional information -- THIS IS JUST AN EXAMPLE, you can delete it.
-const RenderedList = (roverDataRaw) => {
+const updateApplicationStore = (roverDataRaw) => {
     const roverPhotoCollectionRaw = roverDataRaw.image.photos.sort((itemA, itemB) => itemA.earth_date - itemB.earth_date);
 
     const roverPhotoCollection = roverPhotoCollectionRaw.map(item => {
@@ -48,9 +40,33 @@ const RenderedList = (roverDataRaw) => {
         };
     });
 
-    const immutableRoverPhotoCollection = fromJS(roverPhotoCollection);
+    return fromJS(roverPhotoCollection);
+}
 
+// create content
+const App = async () => {
 
+    const fetchMoviesJSON = async () => {
+        return await fetch('http://localhost:3000/apod').then(response => response.json());
+    }
+
+    const roverDataRaw = await fetchMoviesJSON();
+
+    applicationStore = updateApplicationStore(roverDataRaw);
+
+    return `${RenderedList(applicationStore)}`;
+}
+
+// listening for load event because page should load before any JS is called
+window.addEventListener('load', () => {
+    JsLoadingOverlay.show();
+    render(root)
+})
+
+// ------------------------------------------------------  COMPONENTS
+
+// Pure function that renders conditional information -- THIS IS JUST AN EXAMPLE, you can delete it.
+const RenderedList = (immutableRoverPhotoCollection) => {
     const htmlRoverInitialList = immutableRoverPhotoCollection.map((item, index) => {
         let htmlMarkup = '';
 
@@ -82,9 +98,21 @@ const RenderedList = (roverDataRaw) => {
         <main>
             <section>
                 <div class="container">
-                  <div class="row" id="root">
-                    ${htmlRoverInitialList.join('')}
-                  </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card selection-form">
+                                <form>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="root">
+                        ${htmlRoverInitialList.join('')}
+                    </div>
                 </div>
             </section>
         </main>
