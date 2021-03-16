@@ -8,7 +8,9 @@
     "start-backend-server": "node src/server/index.js",
     "start-frontend-server": "npx http-server -a localhost src/public/",
     "build": "webpack --config webpack.js --mode production",
-    "build-dev": "webpack --config webpack.js --mode development"
+    "build-dev": "webpack --config webpack.js --mode development",
+    "livereload": "livereload src/public/",
+    "dev-stack": "npm run start-backend-server & npm run start-frontend-server & npm run build-dev & npm run livereload"
   },
   "author": "",
   "license": "ISC",
@@ -38,6 +40,7 @@
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
+    "underscore": "^1.12.1",
     "webpack": "^5.24.4"
   },
   "devDependencies": {
