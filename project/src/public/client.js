@@ -33,8 +33,9 @@ const disableOption = (option) => {
 }
 
 const updateApplicationStore = (roverDataRaw) => {
-    window.roverDataRaw = roverDataRaw;
-    const roverPhotoCollectionRaw = window.roverDataRaw.image.photos.sort((itemA, itemB) => itemA.earth_date - itemB.earth_date);
+    window.roverDataRaw = roverDataRaw[0].photos.concat(roverDataRaw[1].photos).concat(roverDataRaw[2].photos);
+
+    const roverPhotoCollectionRaw = window.roverDataRaw.sort((itemA, itemB) => itemA.earth_date - itemB.earth_date);
 
     const roverPhotoCollection = roverPhotoCollectionRaw.map(item => {
         return {
