@@ -126,27 +126,27 @@ const RenderedList = (immutableRoverPhotoCollection) => {
         <main>
             <section>
                 <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card selection-form">
-                                <form>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="landingDate" ` +
-
-      (() => {
-          if (window.options.get('landingDate') === true) {
-              return 'checked="checked"'
-          }
-      })()
-
-                                        + `/>
-                                        
-                                        <label class="form-check-label" for="landing_date">Landing date</label>
-                                    </div>
-                                </form>
+                    <form class="card selection-form">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" id="landingDate" ` +
+                                    (() => {
+                                      if (window.options.get('landingDate') === true) {
+                                          return 'checked="checked"'
+                                      }
+                                    })() + `/>
+                                <label class="form-check-label" for="landing_date">Landing date</label>
+                            </div>
+                            <div class="col">
+                                <select name="rovers" class="form-control">
+                                    <option value="spirit">Spirit</option>
+                                    <option value="opportunity">Opportunity</option>
+                                    <option value="perseverance">Perseverance</option>
+                                    <option value="curiosity">Curiosity</option>
+                                </select>
                             </div>
                         </div>
-                    </div>
+                    </form>
                     <div class="row" id="root">
                         ${htmlRoverInitialList.join('')}
                     </div>
