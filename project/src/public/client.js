@@ -141,7 +141,6 @@ const RenderedList = (immutableRoverPhotoCollection) => {
                                 <select name="rovers" class="form-control">
                                     <option value="spirit">Spirit</option>
                                     <option value="opportunity">Opportunity</option>
-                                    <option value="perseverance">Perseverance</option>
                                     <option value="curiosity">Curiosity</option>
                                 </select>
                             </div>
