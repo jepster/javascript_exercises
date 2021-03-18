@@ -128,7 +128,7 @@ const RenderedList = (immutableRoverPhotoCollection) => {
                 <div class="container">
                     <form class="card selection-form">
                         <div class="row">
-                            <div class="col">
+                            <div class="col landing-date-col">
                                 <input type="checkbox" class="form-check-input" id="landingDate" ` +
                                     (() => {
                                       if (window.options.get('landingDate') === true) {
