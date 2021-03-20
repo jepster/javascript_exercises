@@ -111,6 +111,32 @@ const RenderedList = (immutableRoverPhotoCollection) => {
     const htmlRoverInitialList = immutableRoverPhotoCollection.map((item, index) => {
         let htmlMarkup = '';
 
+        let cameraHtml = ``,
+            statusHtml = ``,
+            earthDateHtml = ``,
+            launchDateHtml = ``,
+            landingDateHtml = ``;
+
+        if (!_.isEmpty(item.get('landingDate'))) {
+            landingDateHtml = `<p>Landing date: ${item.get('landingDate')}</p>`;
+        }
+
+        if (!_.isEmpty(item.get('launchDate'))) {
+            launchDateHtml = `<p>Launch date: ${item.get('launchDate')}</p>`;
+        }
+
+        if (!_.isEmpty(item.get('earthDate'))) {
+            earthDateHtml = `<p>Earth date: ${item.get('earthDate')}</p>`;
+        }
+
+        if (!_.isEmpty(item.get('status'))) {
+            statusHtml = `<p>Status: ${item.get('status')}</p>`;
+        }
+
+        if (!_.isEmpty(item.get('camera'))) {
+            cameraHtml = `<p>Camera: ${item.get('camera')}</p>`;
+        }
+
         if (item.get('show') === true) {
             htmlMarkup += `<div class="col-sm-4">
             <div class="card">
@@ -120,12 +146,12 @@ const RenderedList = (immutableRoverPhotoCollection) => {
                 <div class="img-wrapper">
                   <img class="card-img-top" src="${item.get('imgSrc')}" title="${item.get('name')}" alt="${item.get('name')}"/>
                 </div>
-                <div class="card-body">
-                    <p>Landing date: ${item.get('landingDate')}</p>
-                    <p>Launch date: ${item.get('launchDate')}</p>
-                    <p>Earth date: ${item.get('earthDate')}</p>
-                    <p>Status: ${item.get('status')}</p>
-                    <p>Camera: ${item.get('camera')}</p>
+               <div class="card-body">`
+                    + landingDateHtml + 
+                    launchDateHtml +
+                    earthDateHtml +
+                    statusHtml +
+                    cameraHtml + `
                 </div>
             </div>
         </div>`;
@@ -151,6 +177,34 @@ const RenderedList = (immutableRoverPhotoCollection) => {
                                       }
                                     })() + `/>
                                 <label class="form-check-label" for="landing_date">Landing date</label>
+                                <input type="checkbox" class="form-check-input" id="launchDate" ` +
+                                    (() => {
+                                      if (window.options.get('launchDate') === true) {
+                                          return 'checked="checked"'
+                                      }
+                                    })() + `/>
+                                <label class="form-check-label" for="launch_date">Launch date</label>
+                                <input type="checkbox" class="form-check-input" id="earthDate" ` +
+                                    (() => {
+                                      if (window.options.get('earthDate') === true) {
+                                          return 'checked="checked"'
+                                      }
+                                    })() + `/>
+                                <label class="form-check-label" for="earth_date">Earth date</label>
+                                <input type="checkbox" class="form-check-input" id="camera" ` +
+                                    (() => {
+                                      if (window.options.get('camera') === true) {
+                                          return 'checked="checked"'
+                                      }
+                                    })() + `/>
+                                <label class="form-check-label" for="camera">Camera</label>
+                                <input type="checkbox" class="form-check-input" id="status" ` +
+                                    (() => {
+                                      if (window.options.get('status') === true) {
+                                          return 'checked="checked"'
+                                      }
+                                    })() + `/>
+                                <label class="form-check-label" for="status">Status</label>
                             </div>
                             <div class="col">
                                 <select name="rovers" class="form-control">
