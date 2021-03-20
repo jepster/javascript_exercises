@@ -3,7 +3,7 @@ const { fromJS, Map } = require('immutable');
 import 'bootstrap';
 import "./assets/stylesheets/main.scss";
 import 'js-loading-overlay'
-import _, { map } from 'underscore';
+import _ from 'underscore';
 
 // add our markup to the page
 const root = document.getElementById('root')
@@ -33,7 +33,9 @@ const disableOption = (option) => {
 }
 
 const updateApplicationStore = (roverDataRaw) => {
-    window.roverDataRaw = roverDataRaw[0].photos.concat(roverDataRaw[1].photos).concat(roverDataRaw[2].photos);
+    if (!_.isEmpty(roverDataRaw[0].photos)) {
+        window.roverDataRaw = roverDataRaw[0].photos.concat(roverDataRaw[1].photos).concat(roverDataRaw[2].photos);
+    }
 
     const roverPhotoCollectionRaw = window.roverDataRaw.sort((itemA, itemB) => itemA.earth_date - itemB.earth_date);
 
@@ -46,6 +48,11 @@ const updateApplicationStore = (roverDataRaw) => {
             launchDate: window.options.get('launchDate') ? item.rover.launch_date : null,
             status: window.options.get('status') ? item.rover.status : null,
             camera: window.options.get('camera') ? item.camera.full_name : null,
+            show: ((item) => {
+                if (typeof window.selectedRover === 'undefined' || window.selectedRover === 'All') {
+                    return true;
+                } else return item.rover.name === window.selectedRover;
+            })(item)
         };
     });
 
@@ -68,6 +75,11 @@ const render = async (root) => {
         });
     });
 
+    document.querySelector('select').addEventListener('change', (event) => {
+        window.selectedRover = event.currentTarget.selectedOptions[0].value;
+        updateApplicationStore(window.roverDataRaw);
+        render(root);
+    });
 }
 
 // create content
@@ -99,7 +111,8 @@ const RenderedList = (immutableRoverPhotoCollection) => {
     const htmlRoverInitialList = immutableRoverPhotoCollection.map((item, index) => {
         let htmlMarkup = '';
 
-        htmlMarkup += `<div class="col-sm-4">
+        if (item.get('show') === true) {
+            htmlMarkup += `<div class="col-sm-4">
             <div class="card">
                 <div class="card-header">
                     Name: ${item.get('name')}
@@ -116,6 +129,7 @@ const RenderedList = (immutableRoverPhotoCollection) => {
                 </div>
             </div>
         </div>`;
+        }
 
         return htmlMarkup;
     });
@@ -140,9 +154,10 @@ const RenderedList = (immutableRoverPhotoCollection) => {
                             </div>
                             <div class="col">
                                 <select name="rovers" class="form-control">
-                                    <option value="spirit">Spirit</option>
-                                    <option value="opportunity">Opportunity</option>
-                                    <option value="curiosity">Curiosity</option>
+                                    <option value="all">All</option>
+                                    <option value="Spirit">Spirit</option>
+                                    <option value="Opportunity">Opportunity</option>
+                                    <option value="Curiosity">Curiosity</option>
                                 </select>
                             </div>
                         </div>
